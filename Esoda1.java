@@ -16,6 +16,9 @@ public class Esoda1 {
             int arith = scanner.nextInt();
             Values[i] = arith;
         }
+        for (int i=0; i < Values.length; i++) {
+            System.out.println(Category[i] + " : " + Values[i]);
+        }
     }
 
 }
