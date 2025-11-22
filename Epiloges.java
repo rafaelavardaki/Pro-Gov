@@ -1,4 +1,4 @@
-import java.util.Locale.Category;
+
 import java.util.Scanner;
 
 public class Epiloges {
@@ -17,8 +17,8 @@ public class Epiloges {
     public static void changesMain(String[] a, int[] b) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Σε ποια απο τις κατηγορίεσ θα ήθελες να αλλάξεις τιμή;");
-        for (int i = 0 ; i < a.length ; i++ ) {
-                System.out.println((i+1) + ' ' +  a[i]);
+        for (int t = 0 ; t < a.length ; t++ ) {
+                System.out.println((t+1) + ' ' +  a[t]);
         }
         System.out.println(" Δώσε κατηγορία από τις παραπάνω ");
         int katigoria = scanner.nextInt();  /*na ginei elegxos timwn */
@@ -31,6 +31,7 @@ public class Epiloges {
     }
 
     public static void changeBudget(String[] a1, int[] b1, String[] a2, int[] b2) {
+        int r = 0;
         do {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Σε ποιον κλάδο θα ήθελες να κάνεις αλλαγές;");
@@ -44,6 +45,9 @@ public class Epiloges {
             System.out.println("Θα ήθελες να γίνει κάποια ακόμα αλλαγή;");
             System.out.println("1.Ναι, 2.Όχι");
             int answer = scanner.nextInt(); /*na ginei elegxos timwn */
-        } while (answer == 1);
+            if (answer == 2) {
+                r = 1;
+            }
+        } while (r == 0);
     }
 }

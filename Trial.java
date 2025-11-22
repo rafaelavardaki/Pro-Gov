@@ -13,8 +13,9 @@ public class Trial {
             int arith = scanner.nextInt();
             b[i] = arith;
         }
+        System.out.println("Εμφάνιση στοιχείων ");
         for (int i=0; i < b.length; i++) {
-            System.out.println("Εμφάνιση στοιχείων ");
+            
             System.out.println(a[i] + " : " + b[i]);
         }
     }
@@ -28,5 +29,5 @@ public class Trial {
             System.out.println("Ο κρατικός προϋπολογισμός είναι ισοσταθμισμένος.");
         }
     }
-    
+
 }
