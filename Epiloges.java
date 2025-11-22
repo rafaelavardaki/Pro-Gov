@@ -15,16 +15,16 @@ public class Epiloges {
     }
 
     public static void changesMain(String[] a, int[] b) {
-
-        System.out.println("Ποια απο τις κατηγορίςσ θα ήθελες να αλλάξεις τιμή;");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Σε ποια απο τις κατηγορίεσ θα ήθελες να αλλάξεις τιμή;");
         for (int i = 0 ; i < a.length ; i++ ) {
-                System.out.println((i+1) + a[i]);
+                System.out.println((i+1) + ' ' +  a[i]);
         }
         System.out.println(" Δώσε κατηγορία από τις παραπάνω ");
         int katigoria = scanner.nextInt();  /*na ginei elegxos timwn */
         System.out.println(a[katigoria-1] + "-> ");
-        int timi = scanner.nextInt();  /*na ginei elegxos timwn */
         System.out.println("Δώσε τιμή για την παραπάνω κατηγορία ");
+        int timi = scanner.nextInt();  /*na ginei elegxos timwn */
         b[katigoria-1] = timi;
         System.out.println(a[katigoria-1] + ":" + b[katigoria-1]);
         
