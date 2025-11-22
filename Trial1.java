@@ -16,6 +16,8 @@ public class Trial1  {
         }
         System.out.println("Έσοδα = " + sum1);
         System.out.println("Έξοδα = " + sum2);
+
+        Trial.comparison(sum1, sum2);
         
         Scanner sc = new Scanner(System.in);
 
