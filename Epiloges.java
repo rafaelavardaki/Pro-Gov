@@ -17,10 +17,12 @@ public class Epiloges {
     public static void changesMain(String[] a, int[] b) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Σε ποια απο τις κατηγορίεσ θα ήθελες να αλλάξεις τιμή;");
+        int g = 0;
         for (int t = 0 ; t < a.length ; t++ ) {
-                System.out.println((t+1) + ' ' +  a[t]);
+            g++;
+            System.out.println((g) + ' ' +  a[t]);
         }
-        System.out.println(" Δώσε κατηγορία από τις παραπάνω ");
+        System.out.println("Δώσε κατηγορία από τις παραπάνω");
         int katigoria = scanner.nextInt();  /*na ginei elegxos timwn */
         System.out.println(a[katigoria-1] + "-> ");
         System.out.println("Δώσε τιμή για την παραπάνω κατηγορία ");
