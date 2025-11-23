@@ -15,7 +15,6 @@ public class Epiloges {
     }
 
     public static void changesMain(String[] a, int[] b) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Σε ποια απο τις κατηγορίεσ θα ήθελες να αλλάξεις τιμή;");
         int g = 0;
         for (int t = 0 ; t < a.length ; t++ ) {
@@ -23,10 +22,11 @@ public class Epiloges {
             System.out.println((g) + ' ' +  a[t]);
         }
         System.out.println("Δώσε κατηγορία από τις παραπάνω");
-        int katigoria = scanner.nextInt();  /*na ginei elegxos timwn */
+
+        int katigoria = CheckVariables.checkingV2();
         System.out.println(a[katigoria-1] + "-> ");
         System.out.println("Δώσε τιμή για την παραπάνω κατηγορία ");
-        int timi = scanner.nextInt();  /*na ginei elegxos timwn */
+        int timi = CheckVariables.checkingV();
         b[katigoria-1] = timi;
         System.out.println(a[katigoria-1] + ":" + b[katigoria-1]);
         
@@ -35,10 +35,11 @@ public class Epiloges {
     public static void changeBudget(String[] a1, int[] b1, String[] a2, int[] b2) {
         int r = 0;
         do {
-            Scanner scanner = new Scanner(System.in);
+
+            
             System.out.println("Σε ποιον κλάδο θα ήθελες να κάνεις αλλαγές;");
             System.out.println("1.Έσοδα, 2.Έξοδα");
-            int epilogi = scanner.nextInt(); /*na ginei elegxos timwn */
+            int epilogi = CheckVariables.checkingV3(); 
             if (epilogi == 1) {
                 Epiloges.changesMain(a1, b1);
             } else {
@@ -46,7 +47,8 @@ public class Epiloges {
             }
             System.out.println("Θα ήθελες να γίνει κάποια ακόμα αλλαγή;");
             System.out.println("1.Ναι, 2.Όχι");
-            int answer = scanner.nextInt(); /*na ginei elegxos timwn */
+
+            int answer = CheckVariables.checkingV3(); 
             if (answer == 2) {
                 r = 1;
             }
