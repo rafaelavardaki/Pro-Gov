@@ -19,11 +19,11 @@ public class Trial1  {
         System.out.println("Έξοδα = " + sum2);
 
         Trial.comparison(sum1, sum2);
-        Scanner input = new Scanner(System.in);
+        
         int x = 0;
         do { 
             MenuEpilogwn.getMenu();
-            int epil = input.nextInt();
+            int epil = CheckVariables.checkingV1();
             if (epil == 1) {
                 Epiloges.getBudget(category1, values1, cat2, val2);
             } else if (epil == 2) {
