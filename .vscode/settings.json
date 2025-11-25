@@ -1,0 +1,4 @@
+{
+    "java.checkstyle.version": "12.1.2",
+    "java.checkstyle.configuration": "${workspaceFolder}/pom.xml"
+}
