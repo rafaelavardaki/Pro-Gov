@@ -5,20 +5,18 @@ public class Epiloges {
     public static void getBudget(String[] a1, int[] b1, String[] a2, int[] b2) {
         System.out.println("Έσοδα");
         for (int i = 0; i < a1.length; i++) {
-            System.out.println(a1[i] + ":" + b1[i] );
+            System.out.println(a1[i] + " : " + b1[i]);
         }
         System.out.println("Έξοδα");
         for (int i2 = 0; i2 < a2.length; i2++) {
-            System.out.println(a2[i2] + ":" + b2[i2] );
+            System.out.println(a2[i2] + " : " + b2[i2]);
         }
     }
 
     public static void changesMain(String[] a, int[] b) {
         System.out.println("Σε ποια απο τις κατηγορίεσ θα ήθελες να αλλάξεις τιμή;");
-        int g = 0;
-        for (int t = 0 ; t < a.length ; t++ ) {
-            g++;
-            System.out.println((g) + ' ' +  a[t]);
+        for (String t : a ) {
+            System.out.println(t);
         }
         System.out.println("Δώσε κατηγορία από τις παραπάνω");
 

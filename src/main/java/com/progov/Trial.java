@@ -21,11 +21,11 @@ public class Trial {
 
     public static void comparison(int s1, int s2) {
         if (s1 > s2) {
-            System.out.println("Ο κρατικός προϋπολογισμός είναι πλεονασματικός.");
+            System.out.println("\nΟ κρατικός προϋπολογισμός είναι πλεονασματικός.");
         } else if (s1 < s2) {
-            System.out.println("Ο κρατικός προϋπολογισμός είναι ελλειμματικός."); 
+            System.out.println("\nΟ κρατικός προϋπολογισμός είναι ελλειμματικός."); 
         } else {
-            System.out.println("Ο κρατικός προϋπολογισμός είναι ισοσταθμισμένος.");
+            System.out.println("\nΟ κρατικός προϋπολογισμός είναι ισοσταθμισμένος.");
         }
     }
 
