@@ -21,11 +21,11 @@ public class Epiloges {
         System.out.println("\nΔώσε κατηγορία από τις παραπάνω");
 
         int katigoria = CheckVariables.checkingV2();
-        System.out.println(a[katigoria-1] + "-> ");
+        System.out.println("\n" + a[katigoria-1] + "-> ");
         System.out.println("\nΔώσε τιμή για την παραπάνω κατηγορία ");
         int timi = CheckVariables.checkingV();
         b[katigoria-1] = timi;
-        System.out.println(a[katigoria-1] + ":" + b[katigoria-1]);
+        System.out.println("\n" + a[katigoria-1] + " : " + b[katigoria-1]);
         
     }
 
