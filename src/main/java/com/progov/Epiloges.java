@@ -2,7 +2,7 @@ package com.progov;
 
 public class Epiloges {
    
-    public static void getBudget(String[] a1, int[] b1, String[] a2, int[] b2) {
+    public static void getBudget(String[] a1, double[] b1, String[] a2, double[] b2) {
         System.out.println("\nΈσοδα");
         for (int i = 0; i < a1.length; i++) {
             System.out.println(a1[i] + " : " + b1[i]);
@@ -13,7 +13,7 @@ public class Epiloges {
         }
     }
 
-    public static void changesMain(String[] a, int[] b) {
+    public static void changesMain(String[] a, double[] b) {
         System.out.println("\nΣε ποια απο τις κατηγορίες θα ήθελες να αλλάξεις τιμή;");
         for (String t : a ) {
             System.out.println(t);
@@ -23,13 +23,13 @@ public class Epiloges {
         int katigoria = CheckVariables.checkingV2();
         System.out.println("\n" + a[katigoria-1] + "-> ");
         System.out.println("\nΔώσε τιμή για την παραπάνω κατηγορία ");
-        int timi = CheckVariables.checkingV();
+        double timi = CheckVariables.checkingV();
         b[katigoria-1] = timi;
         System.out.println("\n" + a[katigoria-1] + " : " + b[katigoria-1]);
         
     }
 
-    public static void changeBudget(String[] a1, int[] b1, String[] a2, int[] b2) {
+    public static void changeBudget(String[] a1, double[] b1, String[] a2, double[] b2) {
         int r = 0;
         do {
 

@@ -2,13 +2,13 @@ package com.progov;
 import java.util.Scanner;
 
 public class CheckVariables {
-    public static int checkingV() {
+    public static double checkingV() {
         Scanner in = new Scanner(System.in);
         boolean flag = false;
-        int y = 0;
+        double y = 0;
 
         do { 
-            y = in.nextInt(); /* έλεγχοι μεταβλητών */
+            y = in.nextDouble(); /* έλεγχοι μεταβλητών */
             if (y >= 0) {
                 flag = true;
             } else {
