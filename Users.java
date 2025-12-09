@@ -1,7 +1,9 @@
+package com.progov;
+
 import java.util.Scanner;
 
-public class Main {
-    public static void Users(String[] args) {
+public class Users {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int role;
 
@@ -53,3 +55,4 @@ public class Main {
         } while (choice != 0);
     }
 }
+
