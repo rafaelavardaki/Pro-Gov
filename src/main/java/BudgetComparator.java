@@ -1,58 +1,16 @@
 package com.progov;
 
 public class BudgetComparator {
+    private static double[] incomeLastYear = {10000, 8000, 20000, 4000, 3000, 1500, 1800, 800, 1000, 750, 2800, 600, 2500, 3800, 3500, 1900, 5000, 1000, 9000, 6000};
+    
+    private static double[] expensesLastYear = {17000, 15500, 11500, 9000, 8000, 4800, 6200, 2900, 3800, 5500, 3500, 2700, 2900, 3800, 2500, 3700, 4900, 5800, 12500, 6800};
     
     public static void compare(String[] incomeNames, double[] incomeNow,
                                String[] expenseNames, double[] expensesNow) {
         
         System.out.println("\n--- ΣΥΓΚΡΙΣΗ ΜΕ ΠΕΡΣΙ ---");
         
-        // Περσινά έσοδα 
-        double[] incomeLastYear = new double[20];
-        incomeLastYear[0] = 10000;
-        incomeLastYear[1] = 8000;
-        incomeLastYear[2] = 20000;
-        incomeLastYear[3] = 4000;
-        incomeLastYear[4] = 3000;
-        incomeLastYear[5] = 1500;
-        incomeLastYear[6] = 1800;
-        incomeLastYear[7] = 800;
-        incomeLastYear[8] = 1000;
-        incomeLastYear[9] = 750;
-        incomeLastYear[10] = 2800;
-        incomeLastYear[11] = 600;
-        incomeLastYear[12] = 2500;
-        incomeLastYear[13] = 3800;
-        incomeLastYear[14] = 3500;
-        incomeLastYear[15] = 1900;
-        incomeLastYear[16] = 5000;
-        incomeLastYear[17] = 1000;
-        incomeLastYear[18] = 9000;
-        incomeLastYear[19] = 6000;
-        
-        // Περσινά έξοδα
-        double[] expensesLastYear = new double[20];
-        expensesLastYear[0] = 17000;
-        expensesLastYear[1] = 15500;
-        expensesLastYear[2] = 11500;
-        expensesLastYear[3] = 9000;
-        expensesLastYear[4] = 8000;
-        expensesLastYear[5] = 4800;
-        expensesLastYear[6] = 6200;
-        expensesLastYear[7] = 2900;
-        expensesLastYear[8] = 3800;
-        expensesLastYear[9] = 5500;
-        expensesLastYear[10] = 3500;
-        expensesLastYear[11] = 2700;
-        expensesLastYear[12] = 2900;
-        expensesLastYear[13] = 3800;
-        expensesLastYear[14] = 2500;
-        expensesLastYear[15] = 3700;
-        expensesLastYear[16] = 4900;
-        expensesLastYear[17] = 5800;
-        expensesLastYear[18] = 12500;
-        expensesLastYear[19] = 6800;
-        
+       
         // 1. ΕΣΟΔΑ
         System.out.println("\nΕΣΟΔΑ:");
         System.out.println("----------------------------");
@@ -144,4 +102,11 @@ public class BudgetComparator {
             System.out.println("Φέτος έχουμε ΙΣΟΖΥΓΙΟ");
         }
     }
+    public static double[] getIncomeLastYear() {
+    return incomeLastYear.clone();
+}
+
+public static double[] getExpensesLastYear() {
+    return expensesLastYear.clone();
+}
 }
