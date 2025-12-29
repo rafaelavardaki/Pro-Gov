@@ -43,9 +43,27 @@ public class Users {
             choice = sc.nextInt();
             
             if (choice == 1) {
-                Epiloges.getBudget(Main.category1, Main.values1, Main.cat2, Main.val2);
-            } else if (choice == 2) {
-                // ΣΥΓΚΡΙΣΗ
+                Epiloges.getBudget(Trial1.category1, Trial1.values1, Trial1.cat2, Trial1.val2);
+                } else if (choice == 2) {
+    System.out.println("\n--- ΣΥΓΚΡΙΣΗ ΠΕΡΣΙ vs ΦΕΤΟΣ ---");
+    System.out.println("1. Σύγκριση Εσόδων (Γράφημα)");
+    System.out.println("2. Σύγκριση Εξόδων (Γράφημα)");
+    System.out.println("3. Αριθμητική Σύγκριση (Κείμενο)");
+    System.out.print("Επιλογή: ");
+    int compareChoice = sc.nextInt();
+    
+    double[] incomeLastYear = BudgetComparator.getIncomeLastYear();
+    double[] expensesLastYear = BudgetComparator.getExpensesLastYear();
+    
+    if(compareChoice == 1) {
+        Diagram.diagramm3(Trial1.category1, Trial1.values1, incomeLastYear);
+    } else if(compareChoice == 2) {
+        Diagram.diagramm4(Trial1.cat2, Trial1.val2, expensesLastYear);
+    } else if(compareChoice == 3) {
+        BudgetComparator.compare(Trial1.category1, Trial1.values1, 
+                               Trial1.cat2, Trial1.val2);
+    }
+}
             } else if (choice == 0) {
                 System.out.println("Έξοδος από το μενού Πολίτη...");
             } else {
@@ -56,5 +74,6 @@ public class Users {
         } while (choice != 0);
     }
 }
+
 
 
