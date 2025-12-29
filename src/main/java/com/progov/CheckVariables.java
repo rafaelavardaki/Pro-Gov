@@ -26,10 +26,10 @@ public class CheckVariables {
 
         do { 
             y = in.nextInt();
-            if (y >= 0 && y < 3) {
+            if (y >= 0 && y < 5) {
                 flag = true;
             } else {
-                System.out.println("\nΔώσε 0,1 ή 2"); /* οταν μεγαλωσει το μενου επιλογων θα αλλαξουν και τα ορια!!! */
+                System.out.println("\nΔώσε 0,1,2,3 ή 4"); /* οταν μεγαλωσει το μενου επιλογων θα αλλαξουν και τα ορια!!! */
             }
             
         } while (flag == false);
