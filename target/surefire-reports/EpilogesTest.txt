@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: TrialTest
+Test set: EpilogesTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.058 s -- in TrialTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.071 s -- in EpilogesTest
