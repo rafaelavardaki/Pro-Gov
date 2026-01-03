@@ -1,5 +1,7 @@
-com/progov/Epiloges.class
-com/progov/CheckVariables.class
-com/progov/Trial.class
-com/progov/MenuEpilogwn.class
-com/progov/Trial1.class
+com\progov\Trial1.class
+com\progov\CheckVariables.class
+com\progov\Diagram.class
+com\progov\Trial.class
+com\progov\MenuEpilogwn.class
+com\progov\BudgetComparator.class
+com\progov\Epiloges.class
