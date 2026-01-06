@@ -11,12 +11,8 @@ public class Trial1  {
         double[] val2 = new double[20];
         System.out.println("\nΈΞΟΔΑ:");
         Trial.budgetItem(cat2, val2);
-        double sum1 = 0;
-        double sum2 = 0;
-        for (int i = 0; i < 20; i++ ) {
-            sum1 = sum1 + values1[i];
-            sum2 = sum2 + val2[i];
-        }
+        double sum1 = Trial.sumCalc(values1);
+        double sum2 = Trial.sumCalc(val2);
         System.out.println("\nΈσοδα = " + sum1);
         System.out.println("Έξοδα = " + sum2);
 

@@ -1,6 +1,7 @@
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
@@ -40,4 +41,10 @@ public class TrialTest {
         assertTrue(out.toString().contains("Δώσε τιμές στις παρακάτω κατηγορίες."));
     }
 
+    @Test
+    public void testSumCalc() {
+        double[] vals = {12.6, 89.0};
+        double result =Trial.sumCalc(vals);
+        assertEquals(101.6, result);
+    }
 }

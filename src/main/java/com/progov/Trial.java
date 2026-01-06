@@ -29,4 +29,12 @@ public class Trial {
         }
     }
 
+    public static double sumCalc(double[] vals) {
+        double sum = 0;
+        for (int i = 0; i < vals.length; i++ ) {
+            sum = sum + vals[i];
+        }
+        return sum;
+    }
+
 }
