@@ -60,7 +60,7 @@ public class BudgetComparator {
         double totalIncomeLast = 0;
         double totalIncomeNow = 0;
         
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < incomeLastYear.length; i++) {
             double last = incomeLastYear[i];
             double now = incomeNow[i];
             double diff = now - last;
@@ -87,7 +87,7 @@ public class BudgetComparator {
         double totalExpensesLast = 0;
         double totalExpensesNow = 0;
         
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < expensesLastYear.length; i++) {
             double last = expensesLastYear[i];
             double now = expensesNow[i];
             double diff = now - last;

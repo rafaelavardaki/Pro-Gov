@@ -28,7 +28,7 @@ public class Trial1  {
             int epil = CheckVariables.checkingV1();
             switch (epil) {
                 case 1 -> Epiloges.getBudget(category1, values1, cat2, val2);
-                case 2 -> Epiloges.changeBudget(category1, values1, cat2, val2);
+                case 2 -> Epiloges.changeBudget(category1, values1, cat2, val2); 
                 case 3 -> {
                     Diagram.diagramm1(category1, values1);
                     Diagram.diagramm2(cat2, val2);

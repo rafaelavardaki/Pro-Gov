@@ -1,6 +1,7 @@
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
@@ -24,5 +25,14 @@ public class EpilogesTest {
         assertTrue(out.toString().contains("B2 : 200.0"));
         assertTrue(out.toString().contains("C2 : 300.0"));
         
+    }
+
+    @Test
+    public void testChangesValue() {
+        double[] kostos = {100.0, 200.0, 300.0};
+        int kat = 3;
+        double tim = 40.0;
+        Epiloges.changeValue(kostos, kat, tim);
+        assertEquals(40.0, kostos[2]);
     }
 }

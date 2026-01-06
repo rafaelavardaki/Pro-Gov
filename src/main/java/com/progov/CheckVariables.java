@@ -46,7 +46,7 @@ public class CheckVariables {
             if (y > 0 && y < 21) {
                 flag = true;
             } else {
-                System.out.println("\nΔώσε αριθμό από 1 εώς 20!"); /* οταν μεγαλωσει το μενου επιλογων θα αλλαξουν και τα ορια!!! */
+                System.out.println("\nΔώσε αριθμό από 1 εώς 20!"); 
             }
             
         } while (flag == false);

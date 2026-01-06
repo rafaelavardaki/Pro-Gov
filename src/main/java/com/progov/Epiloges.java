@@ -13,6 +13,10 @@ public class Epiloges {
         }
     }
 
+    public static void changeValue(double j[], int kat, double tim) {
+        j[kat-1] = tim;
+    }
+
     public static void changesMain(String[] a, double[] b) {
         System.out.println("\nΣε ποια απο τις κατηγορίες θα ήθελες να αλλάξεις τιμή;");
         for (String t : a ) {
@@ -24,10 +28,11 @@ public class Epiloges {
         System.out.println("\n" + a[katigoria-1] + "-> ");
         System.out.println("\nΔώσε τιμή για την παραπάνω κατηγορία ");
         double timi = CheckVariables.checkingV();
-        b[katigoria-1] = timi;
+        Epiloges.changeValue(b, katigoria, timi);
         System.out.println("\n" + a[katigoria-1] + " : " + b[katigoria-1]);
         
     }
+
 
     public static void changeBudget(String[] a1, double[] b1, String[] a2, double[] b2) {
         int r = 0;
