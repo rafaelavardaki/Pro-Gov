@@ -70,4 +70,38 @@ public class CheckVariables {
 
     }
 
+    public static int checkingV4() {
+        Scanner in = new Scanner(System.in);
+        boolean flag = false;
+        int y = 0;
+
+        do { 
+            y = in.nextInt();
+            if (y >= 0 && y < 3) {
+                flag = true;
+            } else {
+                System.out.println("\nΔώσε 0,1 ή 2"); /* οταν μεγαλωσει το μενου επιλογων θα αλλαξουν και τα ορια!!! */
+            }
+            
+        } while (flag == false);
+        return y;
+
+    }
+
+    public static int checkingV5() {
+        Scanner in = new Scanner(System.in);
+        boolean flag = false;
+        int y = 0;
+
+        do { 
+            y = in.nextInt();
+            if (y == 1 || y == 2 || y ==3) {
+                flag = true;
+            } else {
+                System.out.println("\nΔώσε 1,2 ή 3"); /* οταν μεγαλωσει το μενου επιλογων θα αλλαξουν και τα ορια!!! */
+            }
+            
+        } while (flag == false);
+        return y;
+    }
 }

@@ -30,6 +30,7 @@ public class BudgetComparator {
         incomeLastYear[18] = 9000;
         incomeLastYear[19] = 6000;
         
+
         // Περσινά έξοδα
         double[] expensesLastYear = new double[20];
         expensesLastYear[0] = 17000;
