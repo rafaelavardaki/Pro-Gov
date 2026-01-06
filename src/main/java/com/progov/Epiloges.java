@@ -13,7 +13,7 @@ public class Epiloges {
         }
     }
 
-    public static void changesMain(String[] a, double[] b) {
+    public static void changesMain(String[] a, double[] b, String type) {
         System.out.println("\nΣε ποια απο τις κατηγορίες θα ήθελες να αλλάξεις τιμή;");
         for (String t : a ) {
             System.out.println(t);
@@ -25,6 +25,7 @@ public class Epiloges {
         System.out.println("\nΔώσε τιμή για την παραπάνω κατηγορία ");
         double timi = CheckVariables.checkingV();
         b[katigoria-1] = timi;
+        DatabaseConnection.saveBudgetItem(type, a[katigoria-1], timi);
         System.out.println("\n" + a[katigoria-1] + " : " + b[katigoria-1]);
         
     }
@@ -38,9 +39,9 @@ public class Epiloges {
             System.out.println("1.Έσοδα, 2.Έξοδα");
             int epilogi = CheckVariables.checkingV3(); 
             if (epilogi == 1) {
-                Epiloges.changesMain(a1, b1);
+                Epiloges.changesMain(a1, b1, "income");
             } else {
-                Epiloges.changesMain(a2, b2);
+                Epiloges.changesMain(a2, b2, "expense");
             }
             System.out.println("\nΘα ήθελες να γίνει κάποια ακόμα αλλαγή;");
             System.out.println("1.Ναι, 2.Όχι");
