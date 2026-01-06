@@ -5,7 +5,7 @@ import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class Diagram {
+public class DiagramCompare {
     
     public static void diagramm3(String[] incomeNames, 
                                 double[] incomeNow, 
