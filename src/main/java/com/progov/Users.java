@@ -65,7 +65,7 @@ public class Users {
                         BudgetComparator.compare(cate1, vals1, cate2, vals2); } 
             
             } else if (choice == 0) {
-                    System.out.println("Έξοδος από το μενού Πολίτη...\n");
+                    System.out.println("\nΈξοδος από το μενού Πολίτη...\n");
             }
 
         } while (choice != 0); 
