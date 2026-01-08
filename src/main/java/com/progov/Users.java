@@ -1,7 +1,8 @@
+
 package com.progov;
 
 
-import java.util.Scanner; //DEN EXW KANEI COMMIT KAI PUSH TIS TELEYTAIES ALLAGES STO FILE AUTO//
+import java.util.Scanner; 
 
 public class Users {
     public static void main(String[] args) {
