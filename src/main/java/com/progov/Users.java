@@ -58,12 +58,11 @@ public class Users {
                 double[] expensesLastYear = {17000,15500,11500,9000,8000,4800,6200,2900,3800,5500,3500,2700,2900,3800,2500,3700,4900,5800,12500,6800};
                 
                     if (compareChoice == 1) {
-                        System.out.println("1");
+                         CompareCharts.showIncomeComparison(cate1, vals1, incomeLastYear);
                     } else if(compareChoice == 2) {
-                        System.out.println("2");
+                        CompareCharts.showExpenseComparison(cate2, vals2, expensesLastYear);
                     } else {
-                        BudgetComparator.compare(cate1, vals1, cate2, vals2); } 
-            
+                        BudgetComparator.compare(cate1, vals1, cate2, vals2); 
             } else if (choice == 0) {
                     System.out.println("Έξοδος από το μενού Πολίτη...\n");
             }
