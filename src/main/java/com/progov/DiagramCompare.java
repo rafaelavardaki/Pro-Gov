@@ -3,69 +3,80 @@ package com.progov;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
+import java.awt.Color;
 
-public class DiagramCompare {
+public class CompareCharts {
     
-    public static void diagramm3(String[] incomeNames, 
-                                double[] incomeNow, 
-                                double[] incomeLastYear) {
+    public static void showIncomeComparison(String[] incomeNames, 
+                                           double[] incomeNow, 
+                                           double[] incomeLast) {
         
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        int size = Math.min(
-            incomeNames.length,
-            Math.min(incomeNow.length, incomeLastYear.length)
-        );
-        
-        if (size == 0) return;
-        
-        for (int i = 0; i < size; i++) {
-            String shortName = incomeNames[i];
-            dataset.addValue(incomeLastYear[i], "ΠΕΡΣΙ", shortName);
-            dataset.addValue(incomeNow[i], "ΦΕΤΟΣ", shortName);
+        for (int i = 0; i < incomeNames.length; i++) {
+            String categoryNumber = Integer.toString(i + 1);  // "1", "2", "3", ...
+            
+            dataset.addValue(incomeLast[i], "2024", categoryNumber);
+            dataset.addValue(incomeNow[i], "2025", categoryNumber);
         }
         
         JFreeChart chart = ChartFactory.createBarChart(
-            "ΣΥΓΚΡΙΣΗ ΕΣΟΔΩΝ: 2024 vs 2025",
-            "Κατηγορίες Εσόδων",
-            "Ποσό (€)",
+            "ΣΥΓΚΡΙΣΗ ΕΣΟΔΩΝ",      
+            "ΚΑΤΗΓΟΡΙΕΣ ΕΣΟΔΩΝ",
+            "ΠΟΣΟ (€)",  
             dataset
         );
-
+        
+        // ΕΞΑΓΩΓΗ ΛΕΖΑΝΤΑΣ
+        chart.getLegend().setVisible(true);
+        chart.getLegend().setPosition(org.jfree.chart.block.RectangleEdge.BOTTOM);
+        CategoryPlot plot = chart.getCategoryPlot();
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(0, new Color(70, 130, 180)); 
+        renderer.setSeriesPaint(1, new Color(60, 179, 113));
+        renderer.setItemMargin(0.1);
+        
         ChartFrame frame = new ChartFrame("Σύγκριση Εσόδων", chart);
-        frame.setSize(1000, 700);
+        frame.setSize(1400, 800);
         frame.setVisible(true);
     }
     
-    public static void diagramm4(String[] expenseNames,
-                                double[] expensesNow,
-                                double[] expensesLastYear) {
+    public static void showExpenseComparison(String[] expenseNames,
+                                            double[] expensesNow,
+                                            double[] expensesLast) {
         
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        int size = Math.min(
-            expenseNames.length,
-            Math.min(expensesNow.length, expensesLastYear.length)
-        );
-        
-        if (size == 0) return;
-        
-        for (int i = 0; i < size; i++) {
-            String shortName = expenseNames[i];
-            dataset.addValue(expensesLastYear[i], "ΠΕΡΣΙ", shortName);
-            dataset.addValue(expensesNow[i], "ΦΕΤΟΣ", shortName);
+        for (int i = 0; i < expenseNames.length; i++) {
+            String categoryNumber = Integer.toString(i + 1);  
+            
+            dataset.addValue(expensesLast[i], "2024", categoryNumber);
+            dataset.addValue(expensesNow[i], "2025", categoryNumber);
         }
         
         JFreeChart chart = ChartFactory.createBarChart(
-            "ΣΥΓΚΡΙΣΗ ΕΞΟΔΩΝ: 2024 vs 2025",
-            "Κατηγορίες Εξόδων",
-            "Ποσό (€)",
+            "ΣΥΓΚΡΙΣΗ ΕΞΟΔΩΝ",      
+            "ΚΑΤΗΓΟΡΙΕΣ ΕΞΟΔΩΝ",    
+            "ΠΟΣΟ (€)",              
             dataset
         );
-
+        
+        
+        chart.getLegend().setVisible(true);
+        chart.getLegend().setPosition(org.jfree.chart.block.RectangleEdge.BOTTOM);
+        
+       
+        CategoryPlot plot = chart.getCategoryPlot();
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        
+      
+        renderer.setSeriesPaint(0, new Color(255, 140, 0));    
+        renderer.setSeriesPaint(1, new Color(220, 20, 60));  
+        renderer.setItemMargin(0.1);
+        
         ChartFrame frame = new ChartFrame("Σύγκριση Εξόδων", chart);
-        frame.setSize(1000, 700);
+        frame.setSize(1400, 800);
         frame.setVisible(true);
     }
 }
