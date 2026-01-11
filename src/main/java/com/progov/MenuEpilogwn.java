@@ -22,5 +22,6 @@ public class MenuEpilogwn {
         System.out.println("1. Σύγκριση Εσόδων (Γράφημα)");
         System.out.println("2. Σύγκριση Εξόδων (Γράφημα)");
         System.out.println("3. Αριθμητική Σύγκριση (Κείμενο)");
+        System.out.print("Επιλογή: "); 
     }
 }
