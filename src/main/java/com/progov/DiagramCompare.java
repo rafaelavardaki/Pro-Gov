@@ -16,7 +16,7 @@ public class CompareCharts {
         
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (int i = 0; i < incomeNames.length; i++) {
-            String categoryNumber = Integer.toString(i + 1);  // "1", "2", "3", ...
+            String categoryNumber = Integer.toString(i + 1); 
             
             dataset.addValue(incomeLast[i], "2024", categoryNumber);
             dataset.addValue(incomeNow[i], "2025", categoryNumber);
@@ -28,8 +28,6 @@ public class CompareCharts {
             "ΠΟΣΟ (€)",  
             dataset
         );
-        
-        // ΕΞΑΓΩΓΗ ΛΕΖΑΝΤΑΣ
         chart.getLegend().setVisible(true);
         chart.getLegend().setPosition(org.jfree.chart.block.RectangleEdge.BOTTOM);
         CategoryPlot plot = chart.getCategoryPlot();
