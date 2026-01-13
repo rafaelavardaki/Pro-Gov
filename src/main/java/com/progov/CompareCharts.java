@@ -1,13 +1,14 @@
 package com.progov;
 
+import java.awt.Color;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.category.DefaultCategoryDataset;
-import java.awt.Color;
-import org.jfree.ui.RectangleEdge;
 
 public class CompareCharts {
     
@@ -30,7 +31,7 @@ public class CompareCharts {
             dataset
         );
         chart.getLegend().setVisible(true);
-        chart.getLegend().setPosition(org.jfree.chart.block.RectangleEdge.BOTTOM);
+        chart.getLegend().setPosition(RectangleEdge.BOTTOM);
         CategoryPlot plot = chart.getCategoryPlot();
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
         renderer.setSeriesPaint(0, new Color(70, 130, 180)); 
@@ -63,7 +64,7 @@ public class CompareCharts {
         
         
         chart.getLegend().setVisible(true);
-        chart.getLegend().setPosition(org.jfree.chart.block.RectangleEdge.BOTTOM);
+        chart.getLegend().setPosition(RectangleEdge.BOTTOM);
         
        
         CategoryPlot plot = chart.getCategoryPlot();
