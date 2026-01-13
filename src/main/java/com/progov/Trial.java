@@ -11,6 +11,7 @@ public class Trial {
             System.out.println(a[i] + " -> " );
             double arith = CheckVariables.checkingV();
             b[i] = arith;
+            DatabaseConnection.saveBudgetItem(null, a[i], arith);
         }
         System.out.println("\nΕμφάνιση στοιχείων ");
         for (int i=0; i < b.length; i++) {

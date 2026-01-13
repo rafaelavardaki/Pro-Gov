@@ -29,6 +29,7 @@ public class Epiloges {
         System.out.println("\nΔώσε τιμή για την παραπάνω κατηγορία ");
         double timi = CheckVariables.checkingV();
         Epiloges.changeValue(b, katigoria, timi);
+        DatabaseConnection.saveBudgetItem(null, a[katigoria-1], timi);
         System.out.println("\n" + a[katigoria-1] + " : " + b[katigoria-1]);
         
     }
