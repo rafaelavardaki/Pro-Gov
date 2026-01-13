@@ -12,8 +12,12 @@ public class DatabaseConnection {
     private static final String PASSWORD = "RafVar0828!";  // Replace with your MySQL password
 
     public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("MySQL JDBC Driver not found.", e);
+        }
         return DriverManager.getConnection(URL, USER, PASSWORD);
-    
     }
 
     public static void createTables() {

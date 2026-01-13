@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Users {
     public static void main(String[] args) {
+        DatabaseConnection.createTables();
         String[] category1 = {"1. Φόρος εισοδήματος φυσικών προσώπων", "2. Φόρος εισοδήματος νομικών προσώπων", "3. Φόρος προστιθέμενης αξίας", "4. Ειδικός φόρος κατανάλωσης καυσίμων", "5. Ειδικός φόρος κατανάλωσης καπνού", "6. Ειδικός φόρος κατανάλωσης αλκοόλ", "7. Φόρος ακίνητης περιουσίας", "8. Τέλη κυκλοφορίας", "9. Τεκμήρια/έμμεσοι φόροι περιουσίας", "10. Τέλη χαρτοσήμου", "11. Έσοδα από κρατικές υπηρεσίες", "12. Πρόστιμα και κυρώσεις", "13. Έσοδα από παραχωρήσεις/άδειες", "14. Έσοδα από αποκρατικοποιήσεις", "15. Έσοδα από αξιοποίηση δημόσιας περιουσίας", "16. Ανταποδοτικά τέλη ΟΤΑ", "17. Κέρδη από δημόσιες επιχειρήσεις", "18. Τόκοι από διαθέσιμα του Δημοσίου", "19. Ευρωπαϊκά κονδύλια / ΕΣΠΑ" , "20. Δάνεια και χρηματοδοτήσεις από διεθνείς οργανισμούς" };
         double[] values1 = new double[20];
         for (int i = 0; i < 20; i++) {
@@ -80,10 +81,10 @@ public class Users {
     public static void ministerMenu(String[] category1, double[] values1, String[] cat2, double[] val2) {
         
         System.out.println("\nΈΣΟΔΑ:");
-        Trial.budgetItem(category1, values1);
+        Trial.budgetItem(category1, values1, "income");
         
         System.out.println("\nΈΞΟΔΑ:");
-        Trial.budgetItem(cat2, val2);
+        Trial.budgetItem(cat2, val2, "expense");
         double sum1 = Trial.sumCalc(values1);
         double sum2 = Trial.sumCalc(val2);
         System.out.println("\nΈσοδα = " + sum1);
