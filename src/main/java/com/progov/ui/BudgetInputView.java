@@ -1,79 +1,120 @@
 package com.progov.ui;
 
 import com.progov.app.App;
-import com.progov.model.Budget;
-import com.progov.service.BudgetService;
+import com.progov.model.BudgetData;
+import com.progov.model.BudgetItem;
+import com.progov.service.BudgetDataService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class BudgetInputView {
 
-    private static final BudgetService service = new BudgetService();
+    private static final BudgetDataService service = new BudgetDataService();
 
     private static double parseOrZero(String s) {
         if (s == null) return 0;
-        s = s.trim().replace(",", "."); // βοηθάει αν γράψεις 10,5
+        s = s.trim().replace(",", ".");
         if (s.isEmpty()) return 0;
         return Double.parseDouble(s);
     }
 
-    public static Scene createScene() {
-        Budget b = service.getBudget();
+    private static String eurM(double v) {
+        return String.format("€%,.0fM", v);
+    }
 
-        Label title = new Label("Εισαγωγή Εσόδων / Εξόδων");
+    public static Scene createScene() {
+        BudgetData data = service.load();
+
+        VBox content = new VBox(14);
+        content.getStyleClass().add("content-wrap");
+
+        Label title = new Label("Εισαγωγή / Τροποποίηση (Κατηγορίες)");
+        title.getStyleClass().add("h1");
+
         Label msg = new Label();
 
-        TextField tfIncomeTax = new TextField(String.valueOf(b.getIncomeTax()));
-        TextField tfVat = new TextField(String.valueOf(b.getVat()));
-        TextField tfOtherRev = new TextField(String.valueOf(b.getOtherRevenue()));
+        // Inputs revenue
+        TextField revName = new TextField();
+        revName.setPromptText("Κατηγορία Εσόδου");
+        TextField revAmt = new TextField();
+        revAmt.setPromptText("Ποσό (σε εκατ. €)");
 
-        TextField tfSalaries = new TextField(String.valueOf(b.getSalaries()));
-        TextField tfPensions = new TextField(String.valueOf(b.getPensions()));
-        TextField tfOtherExp = new TextField(String.valueOf(b.getOtherExpenses()));
-
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-
-        int r = 0;
-        grid.add(new Label("Έσοδα - Φόρος Εισοδήματος"), 0, r); grid.add(tfIncomeTax, 1, r++);
-        grid.add(new Label("Έσοδα - ΦΠΑ"), 0, r); grid.add(tfVat, 1, r++);
-        grid.add(new Label("Έσοδα - Άλλα"), 0, r); grid.add(tfOtherRev, 1, r++);
-
-        grid.add(new Separator(), 0, r++, 2, 1);
-
-        grid.add(new Label("Έξοδα - Μισθοί"), 0, r); grid.add(tfSalaries, 1, r++);
-        grid.add(new Label("Έξοδα - Συντάξεις"), 0, r); grid.add(tfPensions, 1, r++);
-        grid.add(new Label("Έξοδα - Άλλα"), 0, r); grid.add(tfOtherExp, 1, r++);
-
-        Button save = new Button("Αποθήκευση");
-        Button calc = new Button("Υπολογισμοί");
-        Button back = new Button("Πίσω");
-
-        save.setOnAction(e -> {
+        Button addRev = new Button("Προσθήκη Εσόδου");
+        addRev.setOnAction(e -> {
             try {
-                b.setIncomeTax(parseOrZero(tfIncomeTax.getText()));
-                b.setVat(parseOrZero(tfVat.getText()));
-                b.setOtherRevenue(parseOrZero(tfOtherRev.getText()));
-
-                b.setSalaries(parseOrZero(tfSalaries.getText()));
-                b.setPensions(parseOrZero(tfPensions.getText()));
-                b.setOtherExpenses(parseOrZero(tfOtherExp.getText()));
-
-                msg.setText("Αποθηκεύτηκε.");
+                service.addRevenue(data, revName.getText().trim(), parseOrZero(revAmt.getText()));
+                App.setScene(BudgetInputView.createScene());
             } catch (Exception ex) {
-                msg.setText("Σφάλμα: βάλε μόνο αριθμούς.");
+                msg.setText("Σφάλμα: βάλε σωστό όνομα και αριθμό.");
             }
         });
 
-        calc.setOnAction(e -> App.setScene(BudgetResultsView.createScene()));
+        // Inputs expense
+        TextField expName = new TextField();
+        expName.setPromptText("Κατηγορία Εξόδου");
+        TextField expAmt = new TextField();
+        expAmt.setPromptText("Ποσό (σε εκατ. €)");
+
+        Button addExp = new Button("Προσθήκη Εξόδου");
+        addExp.setOnAction(e -> {
+            try {
+                service.addExpense(data, expName.getText().trim(), parseOrZero(expAmt.getText()));
+                App.setScene(BudgetInputView.createScene());
+            } catch (Exception ex) {
+                msg.setText("Σφάλμα: βάλε σωστό όνομα και αριθμό.");
+            }
+        });
+
+        // Lists
+        VBox revList = new VBox(6);
+        revList.getChildren().add(new Label("Έσοδα:"));
+        for (BudgetItem i : data.revenues) {
+            Button del = new Button("Διαγραφή");
+            del.setOnAction(e -> { service.deleteRevenue(data, i.id); App.setScene(BudgetInputView.createScene()); });
+            HBox row = new HBox(10, new Label(i.name + " = " + eurM(i.amount)), del);
+            revList.getChildren().add(row);
+        }
+
+        VBox expList = new VBox(6);
+        expList.getChildren().add(new Label("Έξοδα:"));
+        for (BudgetItem i : data.expenses) {
+            Button del = new Button("Διαγραφή");
+            del.setOnAction(e -> { service.deleteExpense(data, i.id); App.setScene(BudgetInputView.createScene()); });
+            HBox row = new HBox(10, new Label(i.name + " = " + eurM(i.amount)), del);
+            expList.getChildren().add(row);
+        }
+
+        Label totals = new Label("Σύνολα: Έσοδα=" + eurM(data.totalRevenue()) +
+                " | Έξοδα=" + eurM(data.totalExpenses()) +
+                " | Ισοζύγιο=" + eurM(data.balance()));
+
+        Button results = new Button("Υπολογισμοί");
+        results.setOnAction(e -> App.setScene(BudgetResultsView.createScene()));
+
+        Button back = new Button("Πίσω");
         back.setOnAction(e -> App.setScene(EditorMenuView.createScene()));
 
-        VBox root = new VBox(12, title, grid, new VBox(8, save, calc, back), msg);
-        root.setPadding(new Insets(20));
-        return new Scene(root, 620, 420);
+        content.getChildren().addAll(
+                title,
+                new Label("Προσθήκη εσόδου:"), new HBox(10, revName, revAmt), addRev,
+                new Separator(),
+                new Label("Προσθήκη εξόδου:"), new HBox(10, expName, expAmt), addExp,
+                new Separator(),
+                totals,
+                new Separator(),
+                revList,
+                new Separator(),
+                expList,
+                new Separator(),
+                results, back, msg
+        );
+
+        content.setPadding(new Insets(10));
+
+        var root = AppShell.wrap("Επεξεργασία", content, true);
+        return new Scene(root, 1000, 650);
     }
 }

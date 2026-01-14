@@ -1,0 +1,19 @@
+.root {
+    -fx-font-family: "System";
+    -fx-background-color: #ffdddd
+;
+}
+
+.button.primary {
+    -fx-background-color: #0d5bd4;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 14;
+    -fx-font-weight: bold;
+}
+
+.button.primary:hover {
+    -fx-background-color: #0b4fb8;
+}
+
+

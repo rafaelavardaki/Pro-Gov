@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg:#f6f8fc;
+      --card:#ffffff;
+      --text:#0b2b5c;
+      --muted:#5b6b86;
+      --blue1:#0b3a82;
+      --blue2:#0d5bd4;
+      --radius:18px;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 30% -10%, rgba(13,91,212,.35), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(11,58,130,.25), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .nav{
+      height:64px;
+      display:flex;
+      align-items:center;
+      padding:0 22px;
+      background: linear-gradient(90deg, var(--blue1), var(--blue2));
+      color:white;
+      box-shadow: 0 10px 22px rgba(8,25,60,.18);
+    }
+    .brand{font-weight:800; letter-spacing:.3px}
+    .wrap{
+      min-height: calc(100% - 64px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+    }
+    .card{
+      width:min(560px, 92vw);
+      background:var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 16px 40px rgba(8,25,60,.12);
+      padding:22px;
+    }
+    .row{display:flex; gap:18px; align-items:center; flex-wrap:wrap}
+    .logo{
+      width:84px; height:84px; border-radius:16px;
+      object-fit:cover;
+      background:#0b3a82;
+    }
+    h1{margin:0; font-size:28px}
+    p{margin:8px 0 0; color:var(--muted)}
+    .actions{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
+    .btn{
+      border:0; cursor:pointer;
+      padding:12px 14px;
+      border-radius: 14px;
+      font-weight:800;
+      font-size:14px;
+    }
+    .primary{background: var(--blue2); color:white}
+    .primary:hover{filter:brightness(.95)}
+    .secondary{background: rgba(13,91,212,.12); color: var(--blue2)}
+    .secondary:hover{background: rgba(13,91,212,.18)}
+    .danger{background: rgba(230,57,70,.12); color:#b4232a}
+    .danger:hover{background: rgba(230,57,70,.18)}
+    .footer{margin-top:14px; font-size:12px; color:var(--muted)}
+    a{color:inherit}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="brand">Pro-GOV</div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="row">
+        <!-- Βάλε το logo σου εδώ: -->
+        <img class="logo" src="logo.png" alt="ProGov logo">
+        <div>
+          <h1>Καλώς ήρθατε</h1>
+          <p>Διαχείριση & προβολή του οικονομικού προϋπολογισμού.</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" onclick="bridge.goCitizen()">Συνέχεια ως Πολίτης</button>
+        <button class="btn secondary" onclick="bridge.goEditor()">Σύνδεση ως Επεξεργαστής</button>
+        <button class="btn danger" onclick="bridge.exit()">Έξοδος</button>
+      </div>
+
+      <div class="footer">Tip: Αυτό είναι HTML/CSS μέσα στο JavaFX WebView.</div>
+    </div>
+  </div>
+</body>
+</html>
+
