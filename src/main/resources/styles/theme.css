@@ -1,0 +1,99 @@
+.root {
+    -fx-font-family: "System";
+    -fx-background-color: #f6f8fc;
+}
+
+.button.primary {
+    -fx-background-color: #0d5bd4;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 14;
+    -fx-font-weight: bold;
+}
+
+.button.primary:hover {
+    -fx-background-color: #0b4fb8;
+}
+
+/* Java FX shell*/
+.appfx-root {
+    -fx-background-color: #f6f8fc;
+}
+
+.navfx {
+    -fx-background-color: linear-gradient(to right, #0b3a82, #0d5bd4);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.18), 16, 0, 0, 6);
+}
+
+.navfx-title {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: 800;
+}
+
+.navfx-btn {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 12;
+}
+.navfx-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.22);
+}
+
+/* Για content spacing */
+.content-wrap {
+    -fx-padding: 22;
+}
+
+/* Card (αν δεν έχεις ήδη) */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 18;
+    -fx-effect: dropshadow(three-pass-box, rgba(8,25,60,0.10), 18, 0, 0, 6);
+}
+
+/* JavaFX shell */
+.appfx-root {
+    -fx-background-color: #f6f8fc;
+}
+
+.navfx {
+    -fx-background-color: linear-gradient(to right, #0b3a82, #0d5bd4);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.18), 16, 0, 0, 6);
+}
+
+.navfx-brand {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: 900;
+}
+
+.navfx-title {
+    -fx-text-fill: rgba(255,255,255,0.92);
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+
+.navfx-btn {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 12;
+}
+.navfx-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.22);
+}
+
+/* Footer */
+.footerfx {
+    -fx-background-color: rgba(255,255,255,0.55);
+    -fx-border-color: rgba(13,91,212,0.18);
+    -fx-border-width: 1 0 0 0;
+}
+.footerfx-text {
+    -fx-text-fill: #5b6b86;
+    -fx-font-weight: 700;
+}
+

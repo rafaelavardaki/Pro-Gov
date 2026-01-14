@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro-GOV - Διαχείριση Κρατικού Προϋπολογισμού</title>
+    <script src="vendor/chart.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #003d82 0%, #001f4d 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #003d82;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .role-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .role-badge.editor {
+            background: #4caf50;
+            color: white;
+        }
+
+        .role-badge.citizen {
+            background: #00a8e8;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #003d82;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #003d82;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #003d82;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background: #00509e;
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stat-card.positive .value {
+            color: #4caf50;
+        }
+
+        .stat-card.negative .value {
+            color: #f44336;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #003d82;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #003d82;
+            color: white;
+        }
+
+        .tab:hover {
+            background: #00509e;
+            color: white;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: end;
+        }
+
+        .input-group input {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .add-btn {
+            padding: 0.75rem 1.5rem;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .add-btn:hover {
+            background: #45a049;
+        }
+
+        .items-list {
+            margin-top: 2rem;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f9f9f9;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            border-left: 4px solid #003d82;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .item-amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #003d82;
+            margin-left: 2rem;
+        }
+
+        .delete-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #d32f2f;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .alert.warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+
+        .alert.info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-top: 2rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .info-text {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .input-group {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <h2>🏛️ Pro-GOV</h2>
+        <h3 style="text-align: center; color: #666; margin-bottom: 2rem;">Σύστημα Διαχείρισης Κρατικού Προϋπολογισμού</h3>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Ρόλος</label>
+                <select id="userRole" required>
+                    <option value="">Επιλέξτε ρόλο...</option>
+                    <option value="editor">Editor (Επεξεργασία)</option>
+                    <option value="citizen">Πολίτης (Προβολή)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Όνομα Χρήστη</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label>Κωδικός</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="login-btn">Σύνδεση</button>
+            <p style="margin-top: 1rem; text-align: center; color: #999; font-size: 0.9rem;">
+                Demo: <br>
+                Editor: admin / admin<br>
+                Πολίτης: citizen / citizen
+            </p>
+        </form>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="mainApp" class="dashboard">
+        <div class="header">
+            <div class="logo">
+                <img src="logo.png" alt="Pro-GOV logo">
+                <span>Pro-GOV - Κρατικός Προϋπολογισμός 2025</span>
+                </div>
+
+            <div class="user-info">
+                <span class="role-badge" id="roleBadge"></span>
+                <span id="userDisplay"></span>
+                <button class="logout-btn" onclick="logout()">Αποσύνδεση</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Συνολικά Έσοδα</h3>
+                    <div class="value" id="totalRevenue">€0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Συνολικά Έξοδα</h3>
+                    <div class="value" id="totalExpenses">€0</div>
+                </div>
+                <div class="stat-card" id="balanceCard">
+                    <h3>Ισολογισμός</h3>
+                    <div class="value" id="balance">€0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Κατάσταση</h3>
+                    <div class="value" id="status" style="font-size: 1.5rem;">-</div>
+                </div>
+            </div>
+
+            <!-- Alerts -->
+            <div id="alertsContainer"></div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('overview')">Επισκόπηση</button>
+                <button class="tab" onclick="switchTab('revenues')">Έσοδα</button>
+                <button class="tab" onclick="switchTab('expenses')">Έξοδα</button>
+                <button class="tab" onclick="switchTab('constraints')">Περιορισμοί</button>
+            </div>
+
+            <!-- Overview Section -->
+            <div id="overviewSection" class="card">
+                <h2>Επισκόπηση Κρατικού Προϋπολογισμού Ελλάδας 2025</h2>
+                <div class="info-text">
+                    <p><strong>Ο Κρατικός Προϋπολογισμός του 2025</strong> καταρτίστηκε με στόχο τη δημοσιονομική σύνεση και την οικονομική ανάπτυξη. Η Ελλάδα αναμένεται να πετύχει το τέταρτο υψηλότερο πρωτογενές πλεόνασμα στην ΕΕ, με σχεδόν μηδενικό συνολικό έλλειμμα.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <h3 style="margin-bottom: 1rem;">Κατανομή Εσόδων</h3>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 1rem;">Κατανομή Εξόδων</h3>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="expenseChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1rem;">Σύγκριση Εσόδων - Εξόδων</h3>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenues Section -->
+            <div id="revenuesSection" class="card hidden">
+                <h2>Διαχείριση Εσόδων</h2>
+                <div id="editorRevenueControls">
+                    <div class="input-group">
+                        <input type="text" id="revenueName" placeholder="Κατηγορία Εσόδου">
+                        <input type="number" id="revenueAmount" placeholder="Ποσό (εκατ. €)" min="0" step="100">
+                        <button class="add-btn" onclick="addRevenue()">Προσθήκη</button>
+                    </div>
+                </div>
+                <div class="items-list" id="revenuesList"></div>
+            </div>
+
+            <!-- Expenses Section -->
+            <div id="expensesSection" class="card hidden">
+                <h2>Διαχείριση Εξόδων</h2>
+                <div id="editorExpenseControls">
+                    <div class="input-group">
+                        <input type="text" id="expenseName" placeholder="Κατηγορία Εξόδου">
+                        <input type="number" id="expenseAmount" placeholder="Ποσό (εκατ. €)" min="0" step="100">
+                        <button class="add-btn" onclick="addExpense()">Προσθήκη</button>
+                    </div>
+                </div>
+                <div class="items-list" id="expensesList"></div>
+            </div>
+
+            <!-- Constraints Section -->
+            <div id="constraintsSection" class="card hidden">
+                <h2>Περιορισμοί Προϋπολογισμού</h2>
+                <div class="alert warning">
+                    <strong>⚠️ Ενεργοί Περιορισμοί:</strong>
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                        <li>Τα έξοδα δεν μπορούν να ξεπερνούν τα έσοδα περισσότερο από 5%</li>
+                        <li>Κάθε κατηγορία εξόδων δεν μπορεί να υπερβαίνει το 30% του συνόλου</li>
+                        <li>Ελάχιστο αποθεματικό: 10% των εσόδων</li>
+                    </ul>
+                </div>
+                <div id="constraintsDetails" style="margin-top: 2rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Πραγματικά δεδομένα Ελλάδας 2025 (σε εκατομμύρια €)
+        const GREECE_2025_DATA = {
+            revenues: [
+                { id: 1, name: 'Φόρος Εισοδήματος', amount: 24941 },
+                { id: 2, name: 'ΦΠΑ', amount: 19500 },
+                { id: 3, name: 'Ειδικοί Φόροι Κατανάλωσης', amount: 8200 },
+                { id: 4, name: 'Λοιπά Φορολογικά Έσοδα', amount: 16059 },
+                { id: 5, name: 'Μη Φορολογικά Έσοδα', amount: 5912 }
+            ],
+            expenses: [
+                { id: 1, name: 'Υγεία', amount: 12500 },
+                { id: 2, name: 'Παιδεία', amount: 6404 },
+                { id: 3, name: 'Άμυνα', amount: 8900 },
+                { id: 4, name: 'Κοινωνική Ασφάλιση', amount: 15000 },
+                { id: 5, name: 'Μισθοί Δημοσίου', amount: 13500 },
+                { id: 6, name: 'Υποδομές & Επενδύσεις', amount: 8500 },
+                { id: 7, name: 'Λειτουργικές Δαπάνες', amount: 7000 },
+                { id: 8, name: 'Λοιπά Έξοδα', amount: 2808 }
+            ]
+        };
+
+        let revenues = [];
+        let expenses = [];
+        let currentUser = null;
+        let currentRole = null;
+        let revenueChart, expenseChart, comparisonChart;
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('userRole').value;
+
+            // DEBUG: για να δούμε ότι πατάς submit
+            console.log("LOGIN TRY:", role, username);
+
+            if (!window.bridge || typeof bridge.login !== "function") {
+                alert("Δεν υπάρχει bridge.login(). Άρα δεν τρέχει μέσα από JavaFX WebView ή δεν έγινε bind σωστά.");
+                return;
+            }
+
+            const ok = bridge.login(role, username, password);
+
+            if (ok) {
+                currentUser = username;
+                currentRole = role;
+
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                document.getElementById('userDisplay').textContent = username;
+
+                const badge = document.getElementById('roleBadge');
+                badge.className = `role-badge ${role}`;
+                badge.textContent = role === 'editor' ? '✏️ Editor' : '👤 Πολίτης';
+
+                loadData();
+                setupUI();
+                updateDashboard();
+                updateCharts();
+            } else {
+                alert("Λάθος στοιχεία σύνδεσης ή ρόλος");
+            }
+            });
+
+
+
+        function logout() {
+            if (window.bridge) {
+                bridge.logout();
+                return;
+            }
+
+            currentUser = null;
+            currentRole = null;
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('userRole').value = '';
+        }
+
+        function setupUI() {
+            const editorControls = ['editorRevenueControls', 'editorExpenseControls'];
+            const isEditor = currentRole === 'editor';
+            
+            editorControls.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = isEditor ? 'block' : 'none';
+            });
+
+            if (currentRole === 'citizen') {
+                const alertsContainer = document.getElementById('alertsContainer');
+                alertsContainer.innerHTML = `
+                    <div class="alert info">
+                        <strong>ℹ️ Λειτουργία Προβολής:</strong> Συνδεθήκατε ως πολίτης. Μπορείτε να δείτε τον Κρατικό Προϋπολογισμό της Ελλάδας για το 2025 αλλά δεν μπορείτε να κάνετε αλλαγές.
+                    </div>
+                `;
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Section').classList.remove('hidden');
+
+            if (tab === 'constraints') {
+                updateConstraints();
+            }
+        }
+
+        function addRevenue() {
+            if (currentRole !== 'editor') {
+                alert('Δεν έχετε δικαίωμα επεξεργασίας');
+                return;
+            }
+
+            const name = document.getElementById('revenueName').value;
+            const amount = parseFloat(document.getElementById('revenueAmount').value);
+
+            if (name && amount > 0) {
+                revenues.push({ id: Date.now(), name, amount });
+                document.getElementById('revenueName').value = '';
+                document.getElementById('revenueAmount').value = '';
+                updateDashboard();
+                updateCharts();
+                renderRevenues();
+                checkConstraints();
+            }
+            saveToJava();
+        }
+
+        function addExpense() {
+            if (currentRole !== 'editor') {
+                alert('Δεν έχετε δικαίωμα επεξεργασίας');
+                return;
+            }
+
+            const name = document.getElementById('expenseName').value;
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+
+            if (name && amount > 0) {
+                expenses.push({ id: Date.now(), name, amount });
+                document.getElementById('expenseName').value = '';
+                document.getElementById('expenseAmount').value = '';
+                updateDashboard();
+                updateCharts();
+                renderExpenses();
+                checkConstraints();
+            }
+            saveToJava();
+        }
+
+        function deleteRevenue(id) {
+            if (currentRole !== 'editor') {
+                alert('Δεν έχετε δικαίωμα επεξεργασίας');
+                return;
+            }
+            revenues = revenues.filter(r => r.id !== id);
+            updateDashboard();
+            updateCharts();
+            renderRevenues();
+            checkConstraints();
+            saveToJava();
+        }
+
+        function deleteExpense(id) {
+            if (currentRole !== 'editor') {
+                alert('Δεν έχετε δικαίωμα επεξεργασίας');
+                return;
+            }
+            expenses = expenses.filter(e => e.id !== id);
+            updateDashboard();
+            updateCharts();
+            renderExpenses();
+            checkConstraints();
+            saveToJava();
+        }
+
+        function renderRevenues() {
+            const list = document.getElementById('revenuesList');
+            const isEditor = currentRole === 'editor';
+            list.innerHTML = revenues.map(r => `
+                <div class="item">
+                    <div class="item-info">
+                        <div class="item-name">${r.name}</div>
+                    </div>
+                    <div class="item-amount">€${r.amount.toLocaleString()}M</div>
+                    ${isEditor ? `<button class="delete-btn" onclick="deleteRevenue(${r.id})">Διαγραφή</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderExpenses() {
+            const list = document.getElementById('expensesList');
+            const isEditor = currentRole === 'editor';
+            list.innerHTML = expenses.map(e => `
+                <div class="item">
+                    <div class="item-info">
+                        <div class="item-name">${e.name}</div>
+                    </div>
+                    <div class="item-amount">€${e.amount.toLocaleString()}M</div>
+                    ${isEditor ? `<button class="delete-btn" onclick="deleteExpense(${e.id})">Διαγραφή</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function updateDashboard() {
+            const totalRev = revenues.reduce((sum, r) => sum + r.amount, 0);
+            const totalExp = expenses.reduce((sum, e) => sum + e.amount, 0);
+            const bal = totalRev - totalExp;
+
+            document.getElementById('totalRevenue').textContent = `€${(totalRev / 1000).toFixed(1)}B`;
+            document.getElementById('totalExpenses').textContent = `€${(totalExp / 1000).toFixed(1)}B`;
+            document.getElementById('balance').textContent = `€${(bal / 1000).toFixed(1)}B`;
+
+            const balanceCard = document.getElementById('balanceCard');
+            if (bal > 0) {
+                balanceCard.classList.add('positive');
+                balanceCard.classList.remove('negative');
+                document.getElementById('status').textContent = '✅ Πλεόνασμα';
+                document.getElementById('status').style.color = '#4caf50';
+            } else if (bal < 0) {
+                balanceCard.classList.add('negative');
+                balanceCard.classList.remove('positive');
+                document.getElementById('status').textContent = '⚠️ Έλλειμμα';
+                document.getElementById('status').style.color = '#f44336';
+            } else {
+                balanceCard.classList.remove('positive', 'negative');
+                document.getElementById('status').textContent = '⚖️ Ισοζύγιο';
+                document.getElementById('status').style.color = '#666';
+            }
+
+            renderRevenues();
+            renderExpenses();
+        }
+
+        function updateCharts() {
+            // Revenue Pie Chart
+            const revCtx = document.getElementById('revenueChart');
+            if (revCtx) {
+                if (revenueChart) revenueChart.destroy();
+                revenueChart = new Chart(revCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: revenues.map(r => r.name),
+                        datasets: [{
+                            data: revenues.map(r => r.amount),
+                            backgroundColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                                '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#FF6384'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'right' },
+                            title: { display: false }
+                        }
+                    }
+                });
+            }
+
+            // Expense Pie Chart
+            const expCtx = document.getElementById('expenseChart');
+            if (expCtx) {
+                if (expenseChart) expenseChart.destroy();
+                expenseChart = new Chart(expCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: expenses.map(e => e.name),
+                        datasets: [{
+                            data: expenses.map(e => e.amount),
+                            backgroundColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                                '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#FF6384'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'right' },
+                            title: { display: false }
+                        }
+                    }
+                });
+            }
+
+            // Comparison Bar Chart
+            const compCtx = document.getElementById('comparisonChart');
+            if (compCtx) {
+                if (comparisonChart) comparisonChart.destroy();
+                
+                const allCategories = new Set([...revenues.map(r => r.name), ...expenses.map(e => e.name)]);
+                
+                comparisonChart = new Chart(compCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Έσοδα', 'Έξοδα'],
+                        datasets: [{
+                            label: 'Ποσά (εκατ. €)',
+                            data: [
+                                revenues.reduce((sum, r) => sum + r.amount, 0),
+                                expenses.reduce((sum, e) => sum + e.amount, 0)
+                            ],
+                            backgroundColor: ['#4caf50', '#f44336']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '€' + (value / 1000).toFixed(0) + 'B';
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        }
+
+        function checkConstraints() {
+            if (currentRole !== 'editor') return;
+
+            const totalRev = revenues.reduce((sum, r) => sum + r.amount, 0);
+            const totalExp = expenses.reduce((sum, e) => sum + e.amount, 0);
+            const alerts = document.getElementById('alertsContainer');
+            let hasConstraintViolation = false;
+            let alertsHTML = '';
+
+            if (totalExp > totalRev * 1.05) {
+                hasConstraintViolation = true;
+                alertsHTML += `
+                    <div class="alert error">
+                        <strong>❌ Παραβίαση Περιορισμού:</strong> Τα έξοδα υπερβαίνουν τα έσοδα κατά ${((totalExp/totalRev - 1) * 100).toFixed(1)}%
+                    </div>
+                `;
+            }
+
+            expenses.forEach(e => {
+                if (e.amount > totalExp * 0.30) {
+                    hasConstraintViolation = true;
+                    alertsHTML += `
+                        <div class="alert warning">
+                            <strong>⚠️ Προειδοποίηση:</strong> Η κατηγορία "${e.name}" υπερβαίνει το 30% των συνολικών εξόδων (${((e.amount/totalExp) * 100).toFixed(1)}%)
+                        </div>
+                    `;
+                }
+            });
+
+            const balance = totalRev - totalExp;
+            if (balance < totalRev * 0.10 && totalRev > 0) {
+                hasConstraintViolation = true;
+                alertsHTML += `
+                    <div class="alert warning">
+                        <strong>⚠️ Προειδοποίηση:</strong> Το αποθεματικό είναι χαμηλότερο από 10% των εσόδων (${((balance/totalRev) * 100).toFixed(1)}%)
+                    </div>
+                `;
+            }
+
+            if (!hasConstraintViolation && currentRole === 'editor') {
+                alertsHTML = `
+                    <div class="alert success">
+                        <strong>✅ Επιτυχία:</strong> Όλοι οι περιορισμοί τηρούνται
+                    </div>
+                `;
+            }
+
+            alerts.innerHTML = alertsHTML;
+        }
+
+        function updateConstraints() {
+            const totalRev = revenues.reduce((sum, r) => sum + r.amount, 0);
+            const totalExp = expenses.reduce((sum, e) => sum + e.amount, 0);
+            const balance = totalRev - totalExp;
+            const container = document.getElementById('constraintsDetails');
+
+            container.innerHTML = `
+                <div class="stat-card">
+                    <h3>Ποσοστό Ελλείμματος/Πλεονάσματος</h3>
+                    <div class="value" style="color: ${balance >= 0 ? '#4caf50' : '#f44336'}">
+                        ${totalRev > 0 ? ((balance / totalRev) * 100).toFixed(1) : 0}%
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Ανάλυση Κατηγοριών Εξόδων</h3>
+                ${expenses.map(e => {
+                    const percentage = totalExp > 0 ? ((e.amount / totalExp) * 100).toFixed(1) : 0;
+                    const isOverLimit = percentage > 30;
+                    return `
+                        <div class="item" style="${isOverLimit ? 'border-left-color: #f44336;' : ''}">
+                            <div class="item-info">
+                                <div class="item-name">${e.name} ${isOverLimit ? '⚠️' : ''}</div>
+                                <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">
+                                    ${percentage}% του συνόλου εξόδων
+                                </div>
+                            </div>
+                            <div class="item-amount">€${e.amount.toLocaleString()}M</div>
+                        </div>
+                    `;
+                }).join('')}
+            `;
+        }
+
+        function loadData() {
+        // Αν τρέχει μέσα στο JavaFX WebView
+            if (window.bridge && typeof bridge.loadBudgetJson === "function") {
+            const json = bridge.loadBudgetJson();
+            const data = JSON.parse(json);
+            revenues = data.revenues || [];
+            expenses = data.expenses || [];
+            return;
+        }
+
+        // fallback (browser)
+        revenues = JSON.parse(JSON.stringify(GREECE_2025_DATA.revenues));
+        expenses = JSON.parse(JSON.stringify(GREECE_2025_DATA.expenses));
+        }
+
+        function saveToJava() {
+            if (window.bridge && typeof bridge.saveBudgetJson === "function") {
+                const payload = JSON.stringify({ revenues, expenses });
+                bridge.saveBudgetJson(payload);
+            }
+        }
+    </script>
+    <div class="footer">© 2026 Pro-GOV</div>
+</body>
+</html>

@@ -4,28 +4,27 @@ import com.progov.model.Budget;
 
 public class BudgetService {
 
-    private final BudgetStore store = BudgetStore.get();
+    private final Budget budget = new Budget();
 
     public Budget getBudget() {
-        return store.budget();
+        return budget;
     }
 
-    // Απλός περιορισμός: τα έξοδα δεν πρέπει να ξεπερνούν τα έσοδα
+    // Απλός κανόνας: Έξοδα <= Έσοδα
     public boolean passesConstraints() {
-        return getBudget().totalExpenses() <= getBudget().totalRevenue();
+        return budget.totalExpenses() <= budget.totalRevenue();
     }
 
-    // “Εφαρμογή αλλαγών” (απλό demo):
-    // Αν έξοδα > έσοδα, μειώνουμε proportionally τα "otherExpenses"
+    // Αν παραβιάζεται ο κανόνας, "κόβει" τα άλλα έξοδα ώστε να χωρέσουν
     public void applyFixesIfNeeded() {
-        Budget b = getBudget();
-        double rev = b.totalRevenue();
-        double exp = b.totalExpenses();
+        double rev = budget.totalRevenue();
+        double exp = budget.totalExpenses();
 
         if (exp <= rev) return;
 
-        double excess = exp - rev;
-        double newOther = Math.max(0, b.getOtherExpenses() - excess);
-        b.setOtherExpenses(newOther);
+        // μειώνουμε τα "OtherExpenses" όσο χρειάζεται
+        double over = exp - rev;
+        double newOther = Math.max(0, budget.getOtherExpenses() - over);
+        budget.setOtherExpenses(newOther);
     }
 }

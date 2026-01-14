@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pro-GOV - Εγγραφή</title>
+  <style>
+    :root{ --blue:#003d82; --blue2:#001f4d; --muted:#5b6b86; --danger:#f44336; }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue2) 100%);
+      min-height:100vh;
+    }
+    .header{
+      position: fixed; top:0; left:0; right:0; z-index:10;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,61,130,0.18);
+      height:72px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 0 22px;
+    }
+    .brand{ display:flex; align-items:center; gap:12px; color:var(--blue); font-weight:900; }
+    .brand img{ width:40px; height:40px; border-radius:12px; object-fit:cover; }
+
+    .footer{
+      position: fixed; left:0; right:0; bottom:0; height:44px;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(255,255,255,0.70);
+      border-top: 1px solid rgba(0,61,130,0.22);
+      color:#375a8c; font-weight:700; z-index:10;
+      backdrop-filter: blur(6px);
+    }
+
+    .wrap{ min-height:100%; padding: 96px 22px 70px; display:flex; align-items:center; justify-content:center; }
+    .card{
+      width:min(520px, 92vw);
+      background:white;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+      padding: 22px;
+    }
+    h1{ margin:0; color:#0b2b5c; font-size:26px; }
+    p{ margin:10px 0 0; color:var(--muted); line-height:1.5; }
+
+    .form-group{ margin-top: 14px; }
+    label{ display:block; margin-bottom:6px; color:#333; font-weight:600; font-size:13px; }
+    input{
+      width:100%;
+      padding:12px 12px;
+      border:2px solid #e0e0e0;
+      border-radius:10px;
+      font-size:14px;
+    }
+    input:focus{ outline:none; border-color: var(--blue); }
+
+    .btn{
+      width:100%;
+      border:0; cursor:pointer;
+      padding:12px 14px;
+      border-radius:12px;
+      font-weight:800;
+      font-size:14px;
+      margin-top: 12px;
+    }
+    .primary{ background: var(--blue); color:white; }
+    .primary:hover{ background:#00509e; }
+    .danger{ background: rgba(244,67,54,0.12); color: var(--danger); }
+    .danger:hover{ background: rgba(244,67,54,0.18); }
+
+    .msg{ margin-top:10px; font-size:13px; color:var(--muted); text-align:center; }
+    .msg.err{ color:#b4232a; font-weight:700; }
+    .msg.ok{ color:#2e7d32; font-weight:700; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">
+      <img src="logo.png" alt="Pro-GOV logo">
+      <span>Pro-GOV</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>Εγγραφή</h1>
+      <p>Συμπληρώστε τα στοιχεία για να δημιουργήσετε λογαριασμό.</p>
+
+      <div class="form-group">
+        <label>Προσωπικός Αριθμός Πολίτη</label>
+        <input id="pan" type="text" placeholder="π.χ. 1234567890">
+      </div>
+
+      <div class="form-group">
+        <label>Κωδικός</label>
+        <input id="pass1" type="password" placeholder="••••••••">
+      </div>
+
+      <div class="form-group">
+        <label>Επιβεβαίωση Κωδικού</label>
+        <input id="pass2" type="password" placeholder="••••••••">
+      </div>
+
+      <button class="btn primary" onclick="register()">Εγγραφή</button>
+      <button class="btn danger" onclick="back()">Πίσω</button>
+
+      <div class="msg" id="msg"></div>
+    </div>
+  </div>
+
+  <div class="footer">© 2026 Pro-GOV</div>
+
+  <script>
+    function back(){
+      if (window.bridge && bridge.backToLanding) bridge.backToLanding();
+    }
+
+    function register(){
+      const pan = (document.getElementById('pan').value||'').trim();
+      const p1  = (document.getElementById('pass1').value||'').trim();
+      const p2  = (document.getElementById('pass2').value||'').trim();
+      const msg = document.getElementById('msg');
+      msg.className = 'msg';
+
+      if(!pan || !p1 || !p2){ msg.textContent='Συμπληρώστε όλα τα πεδία.'; msg.classList.add('err'); return; }
+      if(p1.length < 4){ msg.textContent='Ο κωδικός πρέπει να έχει τουλάχιστον 4 χαρακτήρες.'; msg.classList.add('err'); return; }
+      if(p1 !== p2){ msg.textContent='Οι κωδικοί δεν ταιριάζουν.'; msg.classList.add('err'); return; }
+
+      // Demo: αν αργότερα θες πραγματική αποθήκευση, θα βάλουμε bridge.registerUser(pan, p1)
+      msg.textContent='✅ Η εγγραφή ολοκληρώθηκε (demo).';
+      msg.classList.add('ok');
+
+      setTimeout(() => { if(window.bridge && bridge.backToLanding) bridge.backToLanding(); }, 500);
+    }
+  </script>
+</body>
+</html>
