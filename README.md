@@ -152,5 +152,8 @@ java -jar ProGov.jar
 ```bash
 mvn test
 ```
+## Διάγραμμα UML
+
+![UML Diagram](Screenshot%202026-01-14%20202056.png)
 
 
