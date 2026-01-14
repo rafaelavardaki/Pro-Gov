@@ -7,3 +7,7 @@ target/
 # VS Code
 .vscode/
 .VSCodeCounter/
+
+# IDEs
+.idea/
+*.iml
